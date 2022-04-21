@@ -4,6 +4,7 @@ const someObj = {
     name: 'UserName'
 }
 // const someObj = new Object({   /// одинаковые записи
+// тут мы в конструктор Object передали тоже свойство
 //     name: 'UserName'
 // })
 // const someObj = Object.create({}, {   /// одинаковые записи
@@ -11,6 +12,7 @@ const someObj = {
 // })
 
 console.log(someObj)
+console.log(someObj.testFunc())
 
 
 class Parent {
@@ -50,7 +52,10 @@ console.log(Object.prototype)
 const obj = {
     a: 4
 }
-
 obj.__proto__ = Array.prototype
-console.log(obj.map(e=>e))
+console.log(obj.map(e=>e)) // []
+console.log(obj.pop()) // undefined
+console.log(obj.testFunc()) // Hello test func
 
+
+let nulObj = Object.create(null)
