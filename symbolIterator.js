@@ -24,6 +24,28 @@
  *
  */
 
+
+/// Задание номер 2 
+class Test1 extends String {   
+constructor(text){
+  super(text)
+  this.text = text;
+ }
+methodStr(){
+  return this.text.toString().replace(/<[^>]*>?/gm, '')
+ }
+}
+
+class Test2 extends Test1{
+ methodTest2(){
+   return this.text
+ }
+}
+let strTest2 = new Test2('Hello World')
+console.log(strTest2);
+
+
+  
 /**
  * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
  * ======================================
@@ -53,6 +75,7 @@
  * ДОПИШИТЕ КЛАСС
  * ===========================================
  */
+
 class DispersionArray {
   constructor(centerPoint, dispersion) {
     /**
@@ -60,21 +83,38 @@ class DispersionArray {
      * this.from = ...
      * this.to = ...
      */
+    this.from = centerPoint;
+    this.to = dispersion;
   }
   [Symbol.iterator](){
     /**
+     *
    * ВАШ КОД ТУТ
      * должен возвращать сам объект
    */
+  this.current=this.from - this.to,
+  this.last=this.from + this.to;
+  return this
   }
-  next() {
+ next() {
     /**
      * ВАШ КОД ТУТ
      * должен возвращать каждый следующий элемент диапазона
      */
-  }
+    if(this.current <= this.to){
+     return{done:false,value:this.current++};
+
+   }else{
+     return {done:true};
+    }
+ }
 }
 
+const abc = new DispersionArray(2,7)
+console.log(abc);
+for(let key of abc){
+  console.log(key);
+}
 /**
  * ========================================================
  * Вторая часть задания #1
@@ -89,6 +129,7 @@ class DispersionArray {
 /**
  * ПОЧЕМУ ТАК
  * =========================================================
+ * происходит наследование от родительского класса и инетарот он принимает с радительского класса то есть прототип у него родительского класса DispersionArray
  * ВАШ КОММЕНТАРИЙ ТУТ
  *
  */
@@ -99,6 +140,19 @@ class DispersionArray {
 //for(item of arr){
 //  console.log(item); //1,2,3,4,5,6
 //}
+class firDict extends DispersionArray{
+
+}
+class secDict extends DispersionArray{
+
+}
+Object.setPrototypeOf(firDict,null) // в качестве прототипа указал нулл 
+
+let secObj = new secDict(2,7); // работает коректно 
+for(let key of secObj){
+  console.log(key);
+}
+
 
 let range = {
   from: 1,
@@ -134,3 +188,5 @@ range[Symbol.iterator] = function() {
 for (let num of range) {
   console.log(num); // 1, затем 2, 3, 4, 5
 }
+
+
