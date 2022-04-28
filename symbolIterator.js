@@ -23,7 +23,24 @@
  * string.toString().replace(/<[^>]*>?/gm, '') - удаляет HTML код из строки
  *
  */
+class Example extends String{
+  constructor (text){
+    super(text);
+    this.text = text;
+  }
+  methodStr(){
+    return this.text.toString().replace(/<[^>]*>?/gm, '')
+  }
+}
 
+class ExampleTwo extends Example {
+  methodExampleTwo(){
+   return this.text
+  }
+    
+}
+const exam2 = new ExampleTwo("Hello World")
+console.log(exam2);
 /**
  * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
  * ======================================
@@ -60,19 +77,34 @@ class DispersionArray {
      * this.from = ...
      * this.to = ...
      */
+    this.centerPoint = centerPoint;
+    this.dispersion = dispersion;
   }
   [Symbol.iterator](){
     /**
    * ВАШ КОД ТУТ
      * должен возвращать сам объект
    */
+  this.disp = this.centerPoint - this.dispersion;
+  this.cent = this.centerPoint + this.dispersion;
+   return this
   }
   next() {
     /**
      * ВАШ КОД ТУТ
      * должен возвращать каждый следующий элемент диапазона
      */
+     if (this.disp <= this.cent) {
+      return { done: false, value: this.disp++ };
+    } else {
+      return { done: true };
+    }
   }
+}
+const calc = new DispersionArray (5,3);
+console.log(calc);
+for(let key of calc) {
+  console.log(key);
 }
 
 /**
@@ -85,7 +117,21 @@ class DispersionArray {
  * 3. Пройдитесь по второму эземпляру secDict циклом for...of и убедитесь что он корректно выводит все числа в заданном диапазоне
  * 4. Откройте браузер и выведите secDict --  у него есть итератор? С чем это связано? -- ответ оставьте в комментарии ниже в разделе "ПОЧЕМУ ТАК"
  */
+class FirDict extends class DispersionArray{
 
+},
+class SecDict extends class DispersionArray{
+
+},
+
+Object.setPrototypeOf(SecDict, null),
+
+
+let secObj = new SecDict (5, 3);
+console.log(secObj);
+for (let key of secObj) {
+  console.log(key);
+}
 /**
  * ПОЧЕМУ ТАК
  * =========================================================
@@ -100,37 +146,37 @@ class DispersionArray {
 //  console.log(item); //1,2,3,4,5,6
 //}
 
-let range = {
-  from: 1,
-  to: 5
-};
+// let range = {
+//   from: 1,
+//   to: 5
+// };
 
-//for (let num of range) { // Ошибка - range is not iterable
-//  alert(num);
-//}
+// //for (let num of range) { // Ошибка - range is not iterable
+// //  alert(num);
+// //}
 
-// 1. вызов for..of сначала вызывает эту функцию
-range[Symbol.iterator] = function() {
+// // 1. вызов for..of сначала вызывает эту функцию
+// range[Symbol.iterator] = function() {
 
-  // ...она возвращает объект итератора:
-  // 2. Далее, for..of работает только с этим итератором, запрашивая у него новые значения
-  return {
-    current: this.from,
-    last: this.to,
+//   // ...она возвращает объект итератора:
+//   // 2. Далее, for..of работает только с этим итератором, запрашивая у него новые значения
+//   return {
+//     current: this.from,
+//     last: this.to,
 
-    // 3. next() вызывается на каждой итерации цикла for..of
-    next() {
-      // 4. он должен вернуть значение в виде объекта {done:.., value :...}
-      if (this.current <= this.last) {
-        return { done: false, value: this.current++ };
-      } else {
-        return { done: true };
-      }
-    }
-  };
-};
+//     // 3. next() вызывается на каждой итерации цикла for..of
+//     next() {
+//       // 4. он должен вернуть значение в виде объекта {done:.., value :...}
+//       if (this.current <= this.last) {
+//         return { done: false, value: this.current++ };
+//       } else {
+//         return { done: true };
+//       }
+//     }
+//   };
+// };
 
-// теперь работает!
-for (let num of range) {
-  console.log(num); // 1, затем 2, 3, 4, 5
-}
+// // теперь работает!
+// for (let num of range) {
+//   console.log(num); // 1, затем 2, 3, 4, 5
+// }
