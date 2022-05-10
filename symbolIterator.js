@@ -123,8 +123,16 @@ class FirDict extends class DispersionArray{
 class SecDict extends class DispersionArray{
 
 },
-
-Object.setPrototypeOf(SecDict, null),
+    /**
+     * -----------------------------------------------
+     * Зачем тут запятые? 122,135,135 строки
+     * Зачем тут наследование? 120, 123 строки
+     *
+     * экземпляр класса это не дочерний класс
+     * нам тут нужно просто создать экземпляры класса
+     * -----------------------------------------------
+     */
+    Object.setPrototypeOf(SecDict, null),
 
 
 let secObj = new SecDict (5, 3);
