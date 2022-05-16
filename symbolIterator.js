@@ -23,23 +23,22 @@
  * string.toString().replace(/<[^>]*>?/gm, '') - удаляет HTML код из строки
  *
  */
-class Example extends String{
-  constructor (text){
+class Example extends String {
+  constructor(text) {
     super(text);
     this.text = text;
   }
-  methodStr(){
-    return this.text.toString().replace(/<[^>]*>?/gm, '')
+  methodStr() {
+    return this.text.toString().replace(/<[^>]*>?/gm, '');
   }
 }
 
 class ExampleTwo extends Example {
-  methodExampleTwo(){
-   return this.text
+  methodExampleTwo() {
+    return this.text;
   }
-    
 }
-const exam2 = new ExampleTwo("Hello World")
+const exam2 = new ExampleTwo('Hello World');
 console.log(exam2);
 /**
  * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
@@ -80,30 +79,30 @@ class DispersionArray {
     this.centerPoint = centerPoint;
     this.dispersion = dispersion;
   }
-  [Symbol.iterator](){
+  [Symbol.iterator]() {
     /**
-   * ВАШ КОД ТУТ
+     * ВАШ КОД ТУТ
      * должен возвращать сам объект
-   */
-  this.disp = this.centerPoint - this.dispersion;
-  this.cent = this.centerPoint + this.dispersion;
-   return this
+     */
+    this.disp = this.centerPoint - this.dispersion;
+    this.cent = this.centerPoint + this.dispersion;
+    return this;
   }
   next() {
     /**
      * ВАШ КОД ТУТ
      * должен возвращать каждый следующий элемент диапазона
      */
-     if (this.disp <= this.cent) {
+    if (this.disp <= this.cent) {
       return { done: false, value: this.disp++ };
     } else {
       return { done: true };
     }
   }
 }
-const calc = new DispersionArray (5,3);
+const calc = new DispersionArray(5, 3);
 console.log(calc);
-for(let key of calc) {
+for (let key of calc) {
   console.log(key);
 }
 
@@ -117,25 +116,13 @@ for(let key of calc) {
  * 3. Пройдитесь по второму эземпляру secDict циклом for...of и убедитесь что он корректно выводит все числа в заданном диапазоне
  * 4. Откройте браузер и выведите secDict --  у него есть итератор? С чем это связано? -- ответ оставьте в комментарии ниже в разделе "ПОЧЕМУ ТАК"
  */
-class FirDict extends class DispersionArray{
+const firDict = new DispersionArray();
 
-},
-class SecDict extends class DispersionArray{
+const secDict = new DispersionArray();
 
-},
-    /**
-     * -----------------------------------------------
-     * Зачем тут запятые? 122,135,135 строки
-     * Зачем тут наследование? 120, 123 строки
-     *
-     * экземпляр класса это не дочерний класс
-     * нам тут нужно просто создать экземпляры класса
-     * -----------------------------------------------
-     */
-    Object.setPrototypeOf(SecDict, null),
+Object.setPrototypeOf(secDict, null);
 
-
-let secObj = new SecDict (5, 3);
+let secObj = new secDict(5, 3);
 console.log(secObj);
 for (let key of secObj) {
   console.log(key);
