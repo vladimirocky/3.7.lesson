@@ -75,6 +75,7 @@ class DispersionArray {
     /**
      * ВАШ КОД ТУТ
      * должен возвращать каждый следующий элемент диапазона
+     * 
      */
     if (this.current <= this.to) {
       return { done: false, value: this.current++ };
