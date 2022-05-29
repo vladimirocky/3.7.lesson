@@ -23,7 +23,36 @@
  * string.toString().replace(/<[^>]*>?/gm, '') - удаляет HTML код из строки
  *
  */
-
+class StringWithFilter extends String {
+  constructor(value) {
+    super(value);
+    this.value = value;
+  }
+  filterHtml() {
+    return this.value.toString().replace(/<[^>]*>?/gm, '')
+  }
+}
+let string = new StringWithFilter();
+class HelloWorldString extends StringWithFilter {
+  constructor(value) {
+    super(value);
+  }
+  set newValue(_value) {
+    this.value = _value;
+  }
+  get newValue() {
+    return this.value;
+  }
+  getHelloWorld() {
+    return "HeLlO WoRd";
+  }
+}
+let string2 = new HelloWorldString();
+string2.newValue = 'Some text with <span class="highlighted">highlighted text</span>';
+console.log(string2.value);
+console.log(string2.filterHtml());
+console.log(string2.getHelloWorld());
+// console.log(string.value);
 /**
  * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
  * ======================================
@@ -55,25 +84,26 @@
  */
 class DispersionArray {
   constructor(centerPoint, dispersion) {
-    /**
-     * ВАШ КОД ТУТ
-     * this.from = ...
-     * this.to = ...
-     */
+    this.from = centerPoint -dispersion;
+    this.to = centerPoint + dispersion;
   }
   [Symbol.iterator](){
-    /**
-   * ВАШ КОД ТУТ
-     * должен возвращать сам объект
-   */
+    this.current = this.from;
+    return this;
   }
   next() {
-    /**
-     * ВАШ КОД ТУТ
-     * должен возвращать каждый следующий элемент диапазона
-     */
+    if (this.current <= this.to) {
+      return { done: false, value: this.current++ };
+    } else {
+      return { done: true };
+}
   }
 }
+let x= 3;
+// let arr = new DispersionArray(5,10);
+// for (let value of arr) {
+//   console.log(value);
+// }
 
 /**
  * ========================================================
@@ -85,7 +115,12 @@ class DispersionArray {
  * 3. Пройдитесь по второму эземпляру secDict циклом for...of и убедитесь что он корректно выводит все числа в заданном диапазоне
  * 4. Откройте браузер и выведите secDict --  у него есть итератор? С чем это связано? -- ответ оставьте в комментарии ниже в разделе "ПОЧЕМУ ТАК"
  */
-
+const firDict = new DispersionArray();
+const secDict = new DispersionArray(3,1);
+firDict.prototype = null;
+for (let d of secDict) {
+  console.log(d);
+}
 /**
  * ПОЧЕМУ ТАК
  * =========================================================
