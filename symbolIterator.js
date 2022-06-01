@@ -24,30 +24,28 @@
  *
  */
 
-/**
- * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
- * ======================================
- * let range = {
- *  from: 1,
- *  to: 5,
- *  // вначале цкл for...of вернет вызовет [Symbol.iterator]
- *  [Symbol.iterator]() {
- *    this.current = this.from;
- *    // вернет сам объект range у которого есть метод next
- *    return this;
- *  },
- *  // полсе того как [Symbol.iterator] вернет range
- *  // for...of вызовет у него метод next
- *  next() {
- *    if (this.current <= this.to) {
- *      return { done: false, value: this.current++ };
- *    } else {
- *      return { done: true };
- *    }
- *  }
- *};
- * ==========================================
- */
+
+  /АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE/
+ 
+  let range = {
+      from: 1,
+        to: 5,
+   // вначале цкл for...of вернет вызовет [Symbol.iterator]
+  [Symbol.iterator]() {
+      this.current = this.from;
+ // вернет сам объект range у которого есть метод next
+      return this;
+      },
+   // полсе того как [Symbol.iterator] вернет range
+   // for...of вызовет у него метод next
+   next() {
+     if (this.current <= this.to) {
+       return { done: false, value: this.current++ };
+     } else {
+       return { done: true };
+     }
+   }
+ };
 
 /**
  * ДОПИШИТЕ КЛАСС
@@ -55,6 +53,8 @@
  */
 class DispersionArray {
   constructor(centerPoint, dispersion) {
+    this.from = from;
+    this.to = to;
     /**
      * ВАШ КОД ТУТ
      * this.from = ...
@@ -62,18 +62,45 @@ class DispersionArray {
      */
   }
   [Symbol.iterator](){
+    this.current = this.from;
+    return this;
     /**
    * ВАШ КОД ТУТ
      * должен возвращать сам объект
    */
   }
   next() {
+    if (this.current <= this.to) {
+      return { done:false, value: this.current++};
+    } else {
+      return {done: true};
+    }
     /**
      * ВАШ КОД ТУТ
      * должен возвращать каждый следующий элемент диапазона
      */
   }
 }
+
+class firDict1 extends DispersionArray {
+  constructor(centerPoint, dispersion) {
+    this.from = from;
+    this.to = to;
+    }
+  }
+
+const firDict = Object.create(null); 
+
+class secDict1 extends DispersionArray {
+  constructor(centerPoint,dispersion) {
+    this.from = from;
+    this.to = to;
+  }
+}
+const secDict = Object.create (range)
+
+for (let num of secDict)
+  console.log(secDict);
 
 /**
  * ========================================================
@@ -88,6 +115,13 @@ class DispersionArray {
 
 /**
  * ПОЧЕМУ ТАК
+ * { current: 2 }
+   { current: 3 }
+   { current: 4 }
+   { current: 5 }
+   { current: 6 }
+   вывод консоли secDict, итератор у него есть, но считает значения +1.
+ * хотя код вроде правильный
  * =========================================================
  * ВАШ КОММЕНТАРИЙ ТУТ
  *
