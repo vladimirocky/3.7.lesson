@@ -27,175 +27,172 @@
 
 /// Задание номер 2 
 class Test1 extends String {   
-constructor(text){
-  super(text)
-  this.text = text;
- }
-methodStr(){
-  return this.text.toString().replace(/<[^>]*>?/gm, '')
- }
-}
-
-class Test2 extends Test1{
- methodTest2(){
-   return this.text
- }
-}
-let strTest2 = new Test2('Hello World')
-console.log(strTest2);
-
-
+  constructor(text){
+    super(text)
+    this.text = text;
+   }
+  methodStr(){
+    return this.text.toString().replace(/<[^>]*>?/gm, '')
+   }
+  }
   
-/**
- * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
- * ======================================
- * let range = {
- *  from: 1,
- *  to: 5,
- *  // вначале цкл for...of вернет вызовет [Symbol.iterator]
- *  [Symbol.iterator]() {
- *    this.current = this.from;
- *    // вернет сам объект range у которого есть метод next
- *    return this;
- *  },
- *  // полсе того как [Symbol.iterator] вернет range
- *  // for...of вызовет у него метод next
- *  next() {
- *    if (this.current <= this.to) {
- *      return { done: false, value: this.current++ };
- *    } else {
- *      return { done: true };
- *    }
- *  }
- *};
- * ==========================================
- */
-
-/**
- * ДОПИШИТЕ КЛАСС
- * ===========================================
- */
-
-class DispersionArray {
-  constructor(centerPoint, dispersion) {
-    /**
-     * ВАШ КОД ТУТ
-     * this.from = ...
-     * this.to = ...
-     */
-    this.from = centerPoint;
-    this.to = dispersion;
+  class Test2 extends Test1{
+   methodTest2(){
+     return this.text
+   }
   }
-  [Symbol.iterator](){
-    /**
-     *
-   * ВАШ КОД ТУТ
-     * должен возвращать сам объект
+  let strTest2 = new Test2('Hello World')
+  console.log(strTest2);
+  
+  
+    
+  /**
+   * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
+   * ======================================
+   * let range = {
+   *  from: 1,
+   *  to: 5,
+   *  // вначале цкл for...of вернет вызовет [Symbol.iterator]
+   *  [Symbol.iterator]() {
+   *    this.current = this.from;
+   *    // вернет сам объект range у которого есть метод next
+   *    return this;
+   *  },
+   *  // полсе того как [Symbol.iterator] вернет range
+   *  // for...of вызовет у него метод next
+   *  next() {
+   *    if (this.current <= this.to) {
+   *      return { done: false, value: this.current++ };
+   *    } else {
+   *      return { done: true };
+   *    }
+   *  }
+   *};
+   * ==========================================
    */
-  this.current=this.from - this.to,
-  this.last=this.from + this.to;
-  return this
-  }
- next() {
-    /**
+  
+  /**
+   * ДОПИШИТЕ КЛАСС
+   * ===========================================
+   */
+  
+  class DispersionArray {
+    constructor(centerPoint, dispersion) {
+      /**
+       * ВАШ КОД ТУТ
+       * this.from = ...
+       * this.to = ...
+       */
+       this.from = centerPoint -dispersion;
+       this.to = centerPoint + dispersion;
+    }
+    [Symbol.iterator](){
+      /**
+       *
      * ВАШ КОД ТУТ
-     * должен возвращать каждый следующий элемент диапазона
+       * должен возвращать сам объект
      */
-    if(this.current <= this.to){
-     return{done:false,value:this.current++};
-
-   }else{
-     return {done:true};
+       this.current = this.from;
+    return this
     }
- }
-}
-
-/**
- * ----------------------------------------------------------
- * если "центральное значение" = 2 а "разброс" = 7
- * то вывод должен быть от -5 ( потомучто 2 - 7) до 9 ( потомучто 2 + 7)
- * тут я рекомендую подумать какие значения присваивать началу диапазона from и концу to
- *
- * ----------------------------------------------------------
- */
-
-const abc = new DispersionArray(2,7)
-console.log(abc);
-for(let key of abc){
-  console.log(key);
-}
-/**
- * ========================================================
- * Вторая часть задания #1
- * ========================================================
- * ВАШ КОД ТУТ
- * 1. Создайте два экземпляра (firDict и secDict) класса DispersionArray
- * 2. Первому экземпляру firDict в качетве прототпа укажите null
- * 3. Пройдитесь по второму эземпляру secDict циклом for...of и убедитесь что он корректно выводит все числа в заданном диапазоне
- * 4. Откройте браузер и выведите secDict --  у него есть итератор? С чем это связано? -- ответ оставьте в комментарии ниже в разделе "ПОЧЕМУ ТАК"
- */
-
-/**
- * ПОЧЕМУ ТАК
- * =========================================================
- * происходит наследование от родительского класса и инетарот он принимает с радительского класса то есть прототип у него родительского класса DispersionArray
- * ВАШ КОММЕНТАРИЙ ТУТ
- *
- */
-
-//
-//const arr = [1,2,4,5,6]
-
-//for(item of arr){
-//  console.log(item); //1,2,3,4,5,6
-//}
-class firDict extends DispersionArray{
-
-}
-class secDict extends DispersionArray{
-
-}
-Object.setPrototypeOf(firDict,null) // в качестве прототипа указал нулл 
-
-let secObj = new secDict(2,7); // работает коректно 
-for(let key of secObj){
-  console.log(key);
-}
-
-
-let range = {
-  from: 1,
-  to: 5
-};
-
-//for (let num of range) { // Ошибка - range is not iterable
-//  alert(num);
-//}
-
-// 1. вызов for..of сначала вызывает эту функцию
-range[Symbol.iterator] = function() {
-
-  // ...она возвращает объект итератора:
-  // 2. Далее, for..of работает только с этим итератором, запрашивая у него новые значения
-  return {
-    current: this.from,
-    last: this.to,
-
-    // 3. next() вызывается на каждой итерации цикла for..of
-    next() {
-      // 4. он должен вернуть значение в виде объекта {done:.., value :...}
-      if (this.current <= this.last) {
-        return { done: false, value: this.current++ };
-      } else {
-        return { done: true };
+   next() {
+      /**
+       * ВАШ КОД ТУТ
+       * должен возвращать каждый следующий элемент диапазона
+       */
+      if(this.current   <= this.to ){
+       return{done:false,value:this.current++};
+  
+     }else{
+       return {done:true};
       }
-    }
+   }
+  }
+  
+  /**
+   * ----------------------------------------------------------
+   * если "центральное значение" = 2 а "разброс" = 7
+   * то вывод должен быть от -5 ( потомучто 2 - 7) до 9 ( потомучто 2 + 7)
+   * тут я рекомендую подумать какие значения присваивать началу диапазона from и концу to
+   *
+   * ----------------------------------------------------------
+   */
+  
+  const abc = new DispersionArray(2,7)
+  console.log(abc);
+  for(let key of abc){
+    console.log(key);
+  }
+  /**
+   * ========================================================
+   * Вторая часть задания #1
+   * ========================================================
+   * ВАШ КОД ТУТ
+   * 1. Создайте два экземпляра (firDict и secDict) класса DispersionArray
+   * 2. Первому экземпляру firDict в качетве прототпа укажите null
+   * 3. Пройдитесь по второму эземпляру secDict циклом for...of и убедитесь что он корректно выводит все числа в заданном диапазоне
+   * 4. Откройте браузер и выведите secDict --  у него есть итератор? С чем это связано? -- ответ оставьте в комментарии ниже в разделе "ПОЧЕМУ ТАК"
+   */
+  
+  /**
+   * ПОЧЕМУ ТАК
+   * =========================================================
+   * происходит наследование от родительского класса и инетарот он принимает с радительского класса то есть прототип у него родительского класса DispersionArray
+   * ВАШ КОММЕНТАРИЙ ТУТ
+   *
+   */
+  
+  //
+  //const arr = [1,2,4,5,6]
+  
+  //for(item of arr){
+  //  console.log(item); //1,2,3,4,5,6
+  //}
+  class firDict extends DispersionArray{
+  
+  }
+  class secDict extends DispersionArray{
+  
+  }
+  Object.setPrototypeOf(firDict,null) // в качестве прототипа указал нулл 
+  
+  let secObj = new secDict(2,7); // работает коректно 
+  for(let key of secObj){
+    console.log(key);
+  }
+  
+  
+  let range = {
+    from: 1,
+    to: 5
   };
-};
-
-// теперь работает!
-for (let num of range) {
-  console.log(num); // 1, затем 2, 3, 4, 5
-}
-
-
+  
+  //for (let num of range) { // Ошибка - range is not iterable
+  //  alert(num);
+  //}
+  
+  // 1. вызов for..of сначала вызывает эту функцию
+  range[Symbol.iterator] = function() {
+  
+    // ...она возвращает объект итератора:
+    // 2. Далее, for..of работает только с этим итератором, запрашивая у него новые значения
+    return {
+      current: this.from,
+      last: this.to,
+  
+      // 3. next() вызывается на каждой итерации цикла for..of
+      next() {
+        // 4. он должен вернуть значение в виде объекта {done:.., value :...}
+        if (this.current <= this.last) {
+          return { done: false, value: this.current++ };
+        } else {
+          return { done: true };
+        }
+      }
+    };
+  };
+  
+  // теперь работает!
+  for (let num of range) {
+    console.log(num); // 1, затем 2, 3, 4, 5
+  }
