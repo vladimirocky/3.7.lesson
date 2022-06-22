@@ -24,7 +24,25 @@
  *
  */
 
+class StrExample extends String {
+  constructor(text) {
+    super(text);
+    this.text = text;
+  }
 
+  StrHods() {
+    return this.text.toString().replace(/<[^>]*>?/gm, '');
+  }
+}
+
+class strExample extends StrExample {
+  Hods() {
+    return this.text;
+  }
+}
+
+let text = new strExample("Hello world");
+console.log(text);
 
 // *
 //  * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
