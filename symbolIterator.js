@@ -24,55 +24,65 @@
  *
  */
 
-/**
- * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
- * ======================================
- * let range = {
- *  from: 1,
- *  to: 5,
- *  // вначале цкл for...of вернет вызовет [Symbol.iterator]
- *  [Symbol.iterator]() {
- *    this.current = this.from;
- *    // вернет сам объект range у которого есть метод next
- *    return this;
- *  },
- *  // полсе того как [Symbol.iterator] вернет range
- *  // for...of вызовет у него метод next
- *  next() {
- *    if (this.current <= this.to) {
- *      return { done: false, value: this.current++ };
- *    } else {
- *      return { done: true };
- *    }
- *  }
- *};
- * ==========================================
- */
+
+
+// *
+//  * АЛЬТЕРНАТИВНАЯ РЕАЛИЗАЦИЯ ОБЪЕКТА RANGE
+//  * ======================================
+
+/*   let rengas = {
+   from: 1,
+   to: 5,
+   // вначале цкл for...of вернет вызовет [Symbol.iterator]
+   [Symbol.iterator]() {
+     this.current = this.from;
+     // вернет сам объект range у которого есть метод next
+     return this;
+   },
+   // полсе того как [Symbol.iterator] вернет range
+   // for...of вызовет у него метод next
+   next() {
+     if (this.current <= this.to) {
+       return { done: false, value: this.current++ };
+     } else {
+       return { done: true };
+     }
+   }
+ }; */
+
 
 /**
  * ДОПИШИТЕ КЛАСС
  * ===========================================
  */
+
 class DispersionArray {
   constructor(centerPoint, dispersion) {
-    /**
-     * ВАШ КОД ТУТ
-     * this.from = ...
-     * this.to = ...
-     */
+    
+
+    this.from = centerPoint;
+    this.to = dispersion;
+    
   }
   [Symbol.iterator](){
-    /**
-   * ВАШ КОД ТУТ
-     * должен возвращать сам объект
-   */
+    this.current = this.from - this.to;
+    this.last = this.from + this.to;
+    return this;
   }
   next() {
-    /**
-     * ВАШ КОД ТУТ
-     * должен возвращать каждый следующий элемент диапазона
-     */
+      if (this.current <= this.last) {
+      return { done: false, value: this.current++ };
+      } else {
+      return { done: true };
+      }
   }
+}
+
+const Dispersion = new DispersionArray(20, 20);
+console.log(Dispersion)
+
+for (let key of Dispersion) {
+    console.log(key);
 }
 
 /**
@@ -86,11 +96,22 @@ class DispersionArray {
  * 4. Откройте браузер и выведите secDict --  у него есть итератор? С чем это связано? -- ответ оставьте в комментарии ниже в разделе "ПОЧЕМУ ТАК"
  */
 
+let firDict = new DispersionArray(3, 5);
+let secDict = new DispersionArray(2, 6);
+
+firDict.__proto__ = null;
+console.log(firDict, secDict)
+
+// for (let key of firDict) console.log(key); // Не итерируется, т.к проперти = null;
+
+
+for (let key of secDict) console.log(key); 
+
 /**
  * ПОЧЕМУ ТАК
  * =========================================================
  * ВАШ КОММЕНТАРИЙ ТУТ
- *
+ *  У SecDict есть иттератор. который наследован от класса DispersionArray
  */
 
 //
