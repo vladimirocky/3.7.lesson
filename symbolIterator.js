@@ -53,6 +53,26 @@
  * ДОПИШИТЕ КЛАСС
  * ===========================================
  */
+ class StrExample extends String {
+  constructor(text) {
+    super(text);
+    this.text = text;
+  }
+
+  StrHods() {
+    return this.text.toString().replace(/<[^>]*>?/gm, '');
+  }
+}
+
+class strExample extends StrExample {
+  Hods() {
+    return this.text;
+  }
+}
+
+let text = new strExample("Hello world");
+console.log(text);
+
 class DispersionArray {
   constructor(centerPoint, dispersion) {
     /**
@@ -60,21 +80,40 @@ class DispersionArray {
      * this.from = ...
      * this.to = ...
      */
+
+    
+     this.from = centerPoint;
+     this.to = dispersion;
   }
   [Symbol.iterator](){
     /**
    * ВАШ КОД ТУТ
      * должен возвращать сам объект
    */
+     this.current = this.from - this.to;
+     this.last = this.from + this.to;
+     return this;
   }
   next() {
     /**
      * ВАШ КОД ТУТ
      * должен возвращать каждый следующий элемент диапазона
      */
+     if (this.current <= this.last) {
+      return { done: false, value: this.current++ };
+      } else {
+      return { done: true };
+      }
   }
 }
 
+
+const Dispersion = new DispersionArray(20, 20);
+console.log(Dispersion)
+
+for (let key of Dispersion) {
+    console.log(key);
+}
 /**
  * ========================================================
  * Вторая часть задания #1
@@ -99,6 +138,17 @@ class DispersionArray {
 //for(item of arr){
 //  console.log(item); //1,2,3,4,5,6
 //}
+
+let firDict = new DispersionArray(3, 5);
+let secDict = new DispersionArray(2, 6);
+
+firDict.__proto__ = null;
+console.log(firDict, secDict)
+
+for (let key of secDict) console.log(key); 
+
+
+
 
 let range = {
   from: 1,
